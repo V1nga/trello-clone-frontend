@@ -1,0 +1,99 @@
+@import "@/assets/styles/mixins";
+
+.title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-bar-glass {
+  @include glass-panel($important: true);
+  box-shadow: none !important;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.app-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.app-bar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .app-bar-logo {
+    width: 26px;
+    height: 26px;
+    display: block;
+  }
+
+  .app-bar-brand-text {
+    font-family: "Poppins", "Segoe UI", sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+}
+
+.profile-btn {
+  text-transform: none;
+
+  .profile-avatar {
+    margin-right: 8px;
+  }
+
+  .profile-chevron {
+    margin-left: 4px;
+    opacity: 0.8;
+  }
+}
+
+.profile-menu-list {
+  padding: 8px;
+
+  .profile-menu-item {
+    margin-bottom: 4px;
+    border-radius: 8px;
+    --v-list-prepend-gap: 12px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .profile-menu-divider {
+    margin: 4px 0;
+  }
+}
+
+// Extra breathing room below the app bar, on top of Vuetify's own layout
+// offset. Unlayered so it wins over VMain.css's @layer rule.
+.app-main {
+  padding-top: calc(var(--v-layout-top) + 24px);
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter-active,
+  .page-leave-active {
+    transition: none;
+  }
+}

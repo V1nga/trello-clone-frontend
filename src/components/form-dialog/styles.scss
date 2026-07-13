@@ -1,0 +1,22 @@
+@import "@/assets/styles/mixins";
+
+.dialog-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 19px;
+
+  @include flush-card-padding;
+}
+
+.dialog-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

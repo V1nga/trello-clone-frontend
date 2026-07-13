@@ -1,0 +1,44 @@
+@import "@/assets/styles/mixins";
+
+.page {
+  height: 100%;
+}
+
+.page-row {
+  height: 100%;
+}
+
+.auth-card {
+  padding: 26px;
+  @include flush-card-padding;
+
+  .register-title {
+    font-weight: 700;
+  }
+
+  .auth-divider {
+    margin: 16px 0;
+    opacity: 1;
+    border-color: rgba(0, 0, 0, 0.24);
+  }
+
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .submit-btn {
+      font-weight: 700;
+    }
+
+    .switch-btn {
+      height: 32px !important;
+      min-height: 32px;
+      margin-top: -8px;
+    }
+
+    .error-alert {
+      margin-bottom: 0;
+    }
+  }
+}

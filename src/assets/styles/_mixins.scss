@@ -1,0 +1,23 @@
+@import "variables";
+
+// Shared translucent panel look used by the app bar, board headers and
+// board/column cards. $important matches call sites that need to win over
+// Vuetify's own component classes.
+@mixin glass-panel($opacity: 0.55, $important: false) {
+  @if $important {
+    background: rgba(255, 255, 255, $opacity) !important;
+  } @else {
+    background: rgba(255, 255, 255, $opacity);
+  }
+  backdrop-filter: blur($glass-blur);
+  -webkit-backdrop-filter: blur($glass-blur);
+}
+
+// Vuetify's v-card-title/v-card-text keep their own padding by default;
+// forms that lay out their own spacing (via gap) need it zeroed out.
+@mixin flush-card-padding {
+  :deep(.v-card-title),
+  :deep(.v-card-text) {
+    padding: 0;
+  }
+}

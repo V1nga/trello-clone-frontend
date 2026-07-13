@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <linearGradient id="trelloCloneGradient" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5546E8"/>
+      <stop offset="1" stop-color="#D946EF"/>
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="12" fill="url(#trelloCloneGradient)"/>
+  <rect x="10" y="14" width="8" height="24" rx="4" fill="#fff" fill-opacity="0.95"/>
+  <rect x="20" y="9" width="8" height="29" rx="4" fill="#fff" fill-opacity="0.75"/>
+  <rect x="30" y="19" width="8" height="19" rx="4" fill="#fff" fill-opacity="0.55"/>
+</svg>

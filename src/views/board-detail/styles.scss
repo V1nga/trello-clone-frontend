@@ -1,0 +1,106 @@
+@import "@/assets/styles/mixins";
+
+.board-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 20px 24px;
+  border-radius: 16px;
+  @include glass-panel;
+
+  .board-bar-info {
+    min-width: 0;
+
+    .board-title {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 32px;
+    }
+
+    .board-description {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.7;
+    }
+  }
+
+  .board-bar-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+
+    .members-row {
+      display: flex;
+      align-items: center;
+
+      .member-badge {
+        display: inline-flex;
+        align-items: center;
+        height: 36px;
+        margin-left: -8px;
+        transition: transform 0.15s ease;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &:hover {
+          transform: translateY(-2px);
+        }
+
+        .member-avatar {
+          cursor: pointer;
+          border: 2px solid rgba(255, 255, 255, 0.85);
+        }
+      }
+
+      .invite-avatar {
+        margin-left: 8px;
+      }
+    }
+  }
+}
+
+// The menu popup content below is teleported by Vuetify outside .board-bar,
+// so it stays unnested even though it's triggered from inside the bar.
+.member-name {
+  font-weight: 500;
+}
+
+.member-email {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+
+.member-role-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.role-select {
+  width: 160px;
+}
+
+.board-menu-list {
+  padding: 8px;
+
+  .board-menu-item {
+    margin-bottom: 4px;
+    border-radius: 8px;
+    --v-list-prepend-gap: 12px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.members-error {
+  margin-bottom: 16px;
+}

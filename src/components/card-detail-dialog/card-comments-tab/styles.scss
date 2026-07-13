@@ -1,0 +1,39 @@
+.comment-block {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+
+  .comment-avatar {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .comment-body {
+    flex: 1 1 auto;
+    min-width: 0;
+
+    .comment-author {
+      font-size: 14px;
+      font-weight: 500;
+
+      .comment-date {
+        font-size: 12px;
+        opacity: 0.7;
+      }
+    }
+
+    .comment-text {
+      font-size: 14px;
+    }
+  }
+}
+
+.comment-field {
+  margin-top: 20px;
+  margin-bottom: 12px;
+}
+
+.comment-actions {
+  display: flex;
+  justify-content: flex-end;
+}

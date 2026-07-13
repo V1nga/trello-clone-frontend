@@ -1,0 +1,85 @@
+.spaced-field {
+  margin-top: 8px;
+}
+
+.field--readonly {
+  :deep(.v-field) {
+    cursor: default;
+
+    &:hover .v-field__outline {
+      --v-field-border-opacity: 0.38;
+    }
+
+    .v-label {
+      cursor: default;
+    }
+  }
+
+  :deep(textarea),
+  :deep(input) {
+    cursor: default;
+  }
+}
+
+.section {
+  margin-top: 16px;
+
+  .section-label {
+    margin-bottom: 4px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.assignee-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+
+  .assignee-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.04);
+
+    .assignee-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+
+      .assignee-name {
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .assignee-email {
+        font-size: 11px;
+        opacity: 0.65;
+      }
+    }
+
+    .assignee-remove {
+      margin-left: 2px;
+    }
+  }
+}
+
+.color-row {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.create-label-button {
+  margin-top: 8px;
+}

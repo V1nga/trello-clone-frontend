@@ -1,0 +1,64 @@
+@import "@/assets/styles/mixins";
+
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 20px 24px;
+  border-radius: 16px;
+  @include glass-panel;
+
+  .page-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 32px;
+  }
+}
+
+.section-alert {
+  margin-bottom: 16px;
+}
+
+.section-header-bar {
+  margin-top: 48px;
+}
+
+.board-card {
+  @include glass-panel($important: true);
+  border-radius: 16px !important;
+  box-shadow: none !important;
+
+  :deep(.v-card-title),
+  :deep(.v-card-text) {
+    padding: 20px;
+  }
+
+  :deep(.v-card-title) {
+    padding-bottom: 4px;
+  }
+
+  :deep(.v-card-text) {
+    padding-top: 0;
+  }
+
+  .board-card-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+    .board-card-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .board-card-actions {
+      display: flex;
+      flex-shrink: 0;
+    }
+  }
+}

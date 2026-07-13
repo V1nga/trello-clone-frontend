@@ -1,0 +1,46 @@
+@import "variables";
+@import "fonts";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+// Soft/translucent look for all solid primary buttons app-wide, echoing the
+// "Добавить карточку" trigger. Unlayered + higher specificity than Vuetify's
+// runtime-injected theme utility classes, so it wins without touching every
+// call site.
+.v-btn.bg-primary {
+  background: rgba($color-primary, 0.12) !important;
+  color: $color-primary !important;
+  box-shadow: none !important;
+}
+
+// Ambient app background: soft color fields + a faint pegboard dot grid,
+// echoing the primary/secondary theme colors. Unlayered so it wins over
+// VApp.css's @layer rule.
+.v-application {
+  background-color: $color-app-background;
+  background-attachment: fixed;
+  background-image:
+    radial-gradient(560px circle at 8% 6%, rgba(79, 70, 229, 0.32), transparent 60%),
+    radial-gradient(620px circle at 92% 88%, rgba(13, 148, 136, 0.28), transparent 60%),
+    radial-gradient(420px circle at 82% 10%, rgba(217, 70, 239, 0.22), transparent 60%),
+    radial-gradient(rgba(79, 70, 229, 0.1) 1px, transparent 1.5px);
+  background-size:
+    auto,
+    auto,
+    auto,
+    26px 26px;
+}

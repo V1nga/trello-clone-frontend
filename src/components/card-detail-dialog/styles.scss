@@ -1,0 +1,31 @@
+.header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.close-btn {
+  margin-left: -12px;
+}
+
+.dialog-tabs {
+  padding: 0 24px;
+}
+
+.title-field {
+  font-size: 24px;
+  font-weight: 700;
+
+  :deep(input) {
+    font-size: 24px;
+    font-weight: 700;
+  }
+}
+
+.archive-btn {
+  font-size: 12px;
+}
+
+.tab-content {
+  max-height: 70vh;
+}

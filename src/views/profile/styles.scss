@@ -1,0 +1,61 @@
+@import "@/assets/styles/mixins";
+
+.auth-card {
+  padding: 26px;
+  @include flush-card-padding;
+}
+
+.profile-split {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+
+  .profile-avatar-panel {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 160px;
+    padding-top: 4px;
+
+    .profile-avatar-large {
+      font-weight: 600;
+    }
+  }
+
+  .profile-vertical-divider {
+    align-self: stretch;
+    opacity: 1;
+    border-color: rgba(0, 0, 0, 0.24);
+  }
+
+  .profile-main {
+    flex: 1 1 auto;
+    min-width: 0;
+
+    .profile-title {
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .profile-content {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .profile-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        .form-alert {
+          margin-bottom: 0;
+        }
+
+        .submit-btn {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}
