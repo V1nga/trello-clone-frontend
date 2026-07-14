@@ -26,4 +26,12 @@ export const columnsClient = {
   async archive(columnId: string): Promise<void> {
     await httpClient.post(`/columns/${columnId}/archive`);
   },
+  async listArchived(boardId: string): Promise<Column[]> {
+    const response = await httpClient.get<Column[]>(`/boards/${boardId}/columns/archived`);
+    return response.data;
+  },
+  async unarchive(columnId: string): Promise<Column> {
+    const response = await httpClient.post<Column>(`/columns/${columnId}/unarchive`);
+    return response.data;
+  },
 };

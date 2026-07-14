@@ -1,13 +1,8 @@
-@import "@/assets/styles/mixins";
-
-.load-error {
-  margin-bottom: 16px;
-}
-
 .columns-scroll-area {
   overflow-x: auto;
   padding-bottom: 8px;
-  min-height: 60vh;
+  flex: 1;
+  min-height: 0;
   cursor: grab;
   scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
 
@@ -43,51 +38,4 @@
     background: rgba(0, 0, 0, 0.35);
     background-clip: padding-box;
   }
-}
-
-.columns-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-
-  .column-card {
-    flex-shrink: 0;
-    cursor: pointer;
-    user-select: none;
-    @include glass-panel($important: true);
-    border-radius: 16px !important;
-    box-shadow: none !important;
-
-    &.column-card--readonly {
-      cursor: default;
-    }
-
-    .column-title-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-
-      .column-name {
-        flex: 1 1 auto;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-    }
-  }
-
-  .add-column-trigger {
-    width: 280px;
-    min-width: 280px;
-    flex-shrink: 0;
-    align-self: flex-start;
-    justify-content: flex-start;
-    cursor: pointer;
-    @include glass-panel(0.3, true);
-    box-shadow: none !important;
-  }
-}
-
-.column-ghost {
-  opacity: 0.4;
 }

@@ -40,6 +40,13 @@ export const cardsClient = {
   async archive(cardId: string): Promise<void> {
     await httpClient.post(`/cards/${cardId}/archive`);
   },
+  async listArchived(boardId: string): Promise<CardSummary[]> {
+    const response = await httpClient.get<CardSummary[]>(`/boards/${boardId}/cards/archived`);
+    return response.data;
+  },
+  async unarchive(cardId: string): Promise<void> {
+    await httpClient.post(`/cards/${cardId}/unarchive`);
+  },
   async addAssignee(cardId: string, userId: string): Promise<void> {
     await httpClient.put(`/cards/${cardId}/assignees/${userId}`);
   },

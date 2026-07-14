@@ -1,0 +1,27 @@
+@import "@/assets/styles/mixins";
+
+.column-card {
+  flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
+  @include glass-panel($important: true);
+  border-radius: 16px !important;
+  box-shadow: none !important;
+
+  &.column-card--readonly {
+    cursor: default;
+  }
+
+  .column-title-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .column-name {
+      flex: 1 1 auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

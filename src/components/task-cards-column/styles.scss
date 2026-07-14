@@ -1,0 +1,28 @@
+.cards-list {
+  min-height: 12px;
+
+  &--empty {
+    min-height: 0;
+  }
+}
+
+.cards-column-empty {
+  padding: 8px 0;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 14px;
+}
+
+.card-ghost {
+  opacity: 0.4;
+}
+
+.add-card-trigger {
+  margin-top: 8px;
+  justify-content: center;
+  color: #5546e8;
+  background: rgba(85, 70, 232, 0.12) !important;
+
+  &--tight {
+    margin-top: 0;
+  }
+}

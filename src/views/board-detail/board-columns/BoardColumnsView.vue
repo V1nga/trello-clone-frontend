@@ -1,13 +1,8 @@
 <template>
-  <div>
+  <div class="board-view-root">
     <VAlert v-if="loadError" class="load-error" type="error" density="compact">{{ loadError }}</VAlert>
 
-    <div
-      ref="scrollAreaRef"
-      class="columns-scroll-area"
-      :class="{ 'columns-scroll-area--dragging': isDragging }"
-      @mousedown="(event) => handleDragStart(event, '.column-card, .add-column-trigger')"
-    >
+    <BoardColumnsScrollArea ignore-selector=".column-card, .add-column-trigger">
       <draggable
         v-model="columns"
         item-key="id"
@@ -20,39 +15,24 @@
         @end="handleReorder"
       >
         <template #item="{ element: col }">
-          <VCard
-            width="280"
-            min-width="280"
-            class="column-card"
-            :class="{ 'column-card--readonly': !canEdit }"
-            rounded="lg"
+          <BoardColumnCard
+            :name="col.name"
+            :readonly="!canEdit"
+            :is-editing-name="editingId === col.id"
+            :editing-name-value="editingValue"
+            :show-archive-button="canEdit"
+            @update:editing-name-value="editingValue = $event"
+            @start-rename="startRename(col)"
+            @save-rename="saveRename(col)"
+            @archive="handleArchive(col)"
           >
-            <VCardTitle class="column-title-row">
-              <VTextField
-                v-if="editingId === col.id"
-                v-model="editingValue"
-                density="compact"
-                hide-details
-                autofocus
-                @keyup.enter="saveRename(col)"
-                @blur="saveRename(col)"
-              />
-              <span v-else class="column-name" @click="canEdit && startRename(col)">
-                {{ col.name }}
-              </span>
-              <VBtn v-if="canEdit" icon variant="text" size="x-small" @click="handleArchive(col)">
-                <VIcon icon="mdi-archive-outline" size="16" />
-              </VBtn>
-            </VCardTitle>
-            <VCardText>
-              <CardsColumn
-                :column-id="col.id"
-                :can-edit="canEdit"
-                :refresh-token="cardsRefreshToken"
-                @open-card="(cardId: string) => emit('open-card', cardId)"
-              />
-            </VCardText>
-          </VCard>
+            <TaskCardsColumn
+              :column-id="col.id"
+              :can-edit="canEdit"
+              :refresh-token="cardsRefreshToken"
+              @open-card="(cardId: string) => emit('open-card', cardId)"
+            />
+          </BoardColumnCard>
         </template>
         <template #footer>
           <VBtn
@@ -67,7 +47,7 @@
           </VBtn>
         </template>
       </draggable>
-    </div>
+    </BoardColumnsScrollArea>
 
     <FormDialog
       v-model="addColumnDialogOpen"
@@ -93,10 +73,11 @@
 import { ref, onMounted, watch } from "vue";
 import draggable from "vuedraggable";
 import { columnsClient } from "@/api";
-import CardsColumn from "@/components/cards-column/CardsColumn.vue";
+import BoardColumnCard from "@/components/board-column/BoardColumnCard.vue";
+import BoardColumnsScrollArea from "@/components/board-columns-scroll-area/BoardColumnsScrollArea.vue";
+import TaskCardsColumn from "@/components/task-cards-column/TaskCardsColumn.vue";
 import FormDialog from "@/components/form-dialog/FormDialog.vue";
 import { useConfirmAction } from "@/composables/useConfirmAction";
-import { useDragScroll } from "@/composables/useDragScroll";
 import { useInlineEdit } from "@/composables/useInlineEdit";
 import type { Column } from "@/types/models";
 
@@ -124,8 +105,6 @@ const creating = ref(false);
 const addColumnDialogOpen = ref(false);
 
 const { confirmAction } = useConfirmAction();
-const scrollAreaRef = ref<HTMLElement | null>(null);
-const { isDragging, handleDragStart } = useDragScroll(scrollAreaRef);
 
 async function loadColumns(): Promise<void> {
   loadError.value = "";

@@ -1,8 +1,8 @@
 <template>
-  <VContainer v-if="board">
+  <VContainer v-if="board" class="board-detail-container">
     <div class="board-bar">
       <div class="board-bar-info">
-        <h1 class="board-title">{{ board.name }}</h1>
+        <h1 class="board-title">{{ isArchiveView ? `Архив: ${board.name}` : board.name }}</h1>
         <p class="board-description">{{ board.description || "Без описания" }}</p>
       </div>
 
@@ -76,6 +76,12 @@
           />
         </div>
 
+        <VBtn
+          :icon="isArchiveView ? 'mdi-arrow-left' : 'mdi-archive-outline'"
+          variant="text"
+          @click="toggleArchiveView"
+        />
+
         <VMenu v-if="isOwner" location="bottom end" :offset="8">
           <template #activator="{ props: menuProps }">
             <VBtn v-bind="menuProps" icon="mdi-dots-vertical" variant="text" />
@@ -103,18 +109,21 @@
       {{ membersError }}
     </VAlert>
 
-    <ColumnsBoard
-      :board-id="boardId"
-      :can-edit="canEdit"
-      :cards-refresh-token="cardsRefreshToken"
-      @open-card="openCard"
-    />
+    <RouterView v-slot="{ Component }">
+      <component
+        :is="Component"
+        :board-id="boardId"
+        :can-edit="canEdit"
+        :cards-refresh-token="cardsRefreshToken"
+        @open-card="openCard"
+      />
+    </RouterView>
 
     <CardDetailDialog
       v-model="cardDialogOpen"
       :card-id="selectedCardId"
       :board-id="boardId"
-      :can-edit="canEdit"
+      :can-edit="canEdit && !isArchiveView"
       :board-members="members"
       @changed="handleCardChanged"
     />
@@ -216,7 +225,6 @@ import { boardsClient, usersClient } from "@/api";
 import { useAuthStore } from "@/stores/auth";
 import { useBoardContextStore } from "@/stores/boardContext";
 import { useDebouncedSearch } from "@/composables/useDebouncedSearch";
-import ColumnsBoard from "@/components/columns-board/ColumnsBoard.vue";
 import CardDetailDialog from "@/components/card-detail-dialog/CardDetailDialog.vue";
 import UserAvatar from "@/components/user-avatar/UserAvatar.vue";
 import FormDialog from "@/components/form-dialog/FormDialog.vue";
@@ -232,6 +240,15 @@ const authStore = useAuthStore();
 const boardContextStore = useBoardContextStore();
 
 const boardId = computed(() => route.params.id as string);
+const isArchiveView = computed(() => route.name === ROUTE_NAMES.boardArchive);
+
+function toggleArchiveView(): void {
+  if (isArchiveView.value) {
+    router.push({ name: ROUTE_NAMES.boardDetail, params: { id: boardId.value } });
+  } else {
+    router.push({ name: ROUTE_NAMES.boardArchive, params: { id: boardId.value } });
+  }
+}
 
 const board = ref<Board | null>(null);
 const members = ref<BoardMember[]>([]);

@@ -1,4 +1,5 @@
 <template>
+  <TabEmptyState v-if="!comments.length" text="Нет комментариев" />
   <div v-for="comment in comments" :key="comment.id" class="comment-block">
     <UserAvatar :name="comment.authorDisplayName" size="28" class="comment-avatar" />
     <div class="comment-body">
@@ -19,6 +20,7 @@
 
 <script setup lang="ts">
 import UserAvatar from "@/components/user-avatar/UserAvatar.vue";
+import TabEmptyState from "@/components/card-detail-dialog/tab-empty-state/TabEmptyState.vue";
 import { useCardComments } from "@/composables/useCardComments";
 
 const props = defineProps<{

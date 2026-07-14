@@ -97,6 +97,8 @@
 // offset. Unlayered so it wins over VMain.css's @layer rule.
 .app-main {
   padding-top: calc(var(--v-layout-top) + 24px);
+  display: flex;
+  flex-direction: column;
 }
 
 .page-enter-active,

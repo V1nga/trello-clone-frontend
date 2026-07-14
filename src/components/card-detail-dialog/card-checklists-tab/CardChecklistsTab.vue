@@ -1,4 +1,5 @@
 <template>
+  <TabEmptyState v-if="!card.checklists.length" text="Нет чек-листов" />
   <template v-for="(checklist, index) in card.checklists" :key="checklist.id">
     <VDivider v-if="index > 0" class="checklist-divider" />
     <div class="checklist-block">
@@ -55,6 +56,7 @@
 
 <script setup lang="ts">
 import FormDialog from "@/components/form-dialog/FormDialog.vue";
+import TabEmptyState from "@/components/card-detail-dialog/tab-empty-state/TabEmptyState.vue";
 import { useCardChecklists } from "@/composables/useCardChecklists";
 import type { CardDetail } from "@/types/models";
 

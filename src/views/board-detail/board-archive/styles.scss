@@ -1,0 +1,28 @@
+.board-view-root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.load-error {
+  margin-bottom: 16px;
+}
+
+.archive-loading {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.archive-empty {
+  padding: 24px 0;
+  color: rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+.columns-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}

@@ -27,7 +27,7 @@
       </div>
     </div>
   </div>
-  <p v-else class="attachments-empty">Нет вложений</p>
+  <TabEmptyState v-else text="Нет вложений" />
 
   <input v-if="canEdit" ref="fileInputRef" type="file" class="hidden-file-input" @change="handleFileInputChange" />
   <div class="attachments-actions">
@@ -47,6 +47,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { attachmentsClient } from "@/api";
+import TabEmptyState from "@/components/card-detail-dialog/tab-empty-state/TabEmptyState.vue";
 import { useAttachmentPreviews, isImage, extension, placeholderColor } from "@/composables/useAttachmentPreviews";
 import { useConfirmAction } from "@/composables/useConfirmAction";
 import type { Attachment, CardDetail } from "@/types/models";

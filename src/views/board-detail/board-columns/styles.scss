@@ -1,0 +1,33 @@
+@import "@/assets/styles/mixins";
+
+.board-view-root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.load-error {
+  margin-bottom: 16px;
+}
+
+.columns-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  .add-column-trigger {
+    width: 280px;
+    min-width: 280px;
+    flex-shrink: 0;
+    align-self: flex-start;
+    justify-content: flex-start;
+    cursor: pointer;
+    @include glass-panel(0.3, true);
+    box-shadow: none !important;
+  }
+}
+
+.column-ghost {
+  opacity: 0.4;
+}

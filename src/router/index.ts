@@ -18,9 +18,20 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/boards/:id",
-    name: ROUTE_NAMES.boardDetail,
     component: () => import("@/views/board-detail/BoardDetailView.vue"),
     meta: { requiresAuth: true },
+    children: [
+      {
+        path: "",
+        name: ROUTE_NAMES.boardDetail,
+        component: () => import("@/views/board-detail/board-columns/BoardColumnsView.vue"),
+      },
+      {
+        path: "archive",
+        name: ROUTE_NAMES.boardArchive,
+        component: () => import("@/views/board-detail/board-archive/BoardArchiveColumnsView.vue"),
+      },
+    ],
   },
   {
     path: "/profile",

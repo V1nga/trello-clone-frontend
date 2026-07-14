@@ -76,7 +76,7 @@
     <VMain class="app-main">
       <RouterView v-slot="{ Component }">
         <transition name="page" mode="out-in">
-          <component :is="Component" :key="route.fullPath" />
+          <component :is="Component" />
         </transition>
       </RouterView>
     </VMain>
@@ -114,7 +114,9 @@ function handleLogout(): void {
 }
 
 const currentBoardId = computed(() =>
-  route.name === ROUTE_NAMES.boardDetail ? (route.params.id as string) : null,
+  route.name === ROUTE_NAMES.boardDetail || route.name === ROUTE_NAMES.boardArchive
+    ? (route.params.id as string)
+    : null,
 );
 
 const CARD_SEARCH_MIN_LENGTH = 2;
