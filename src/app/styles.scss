@@ -18,6 +18,31 @@
   height: 100%;
 }
 
+.app-bar-search {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  padding: 0 24px;
+
+  .card-search-field {
+    width: 100%;
+    max-width: 720px;
+
+    :deep(.v-autocomplete__menu-icon) {
+      display: none;
+    }
+  }
+}
+
+:global(.card-search-menu) {
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+
+:global(.card-search-menu .v-list-item) {
+  --v-list-prepend-gap: 8px;
+}
+
 .app-bar-brand {
   display: flex;
   align-items: center;

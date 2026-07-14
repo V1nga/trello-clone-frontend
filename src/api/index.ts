@@ -31,3 +31,5 @@ export { labelsClient } from "./clients/labelsClient";
 export type { CreateLabelPayload } from "./clients/labelsClient";
 
 export { attachmentsClient } from "./clients/attachmentsClient";
+
+export { usersClient } from "./clients/usersClient";

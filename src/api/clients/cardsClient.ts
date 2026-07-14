@@ -1,5 +1,5 @@
 import { httpClient } from "@/api/http/httpClient";
-import type { CardDetail, CardSummary } from "@/types/models";
+import type { CardDetail, CardSummary, Page } from "@/types/models";
 import type { components } from "@/types/api";
 
 export type CreateCardPayload = components["schemas"]["CreateCardRequest"];
@@ -21,6 +21,12 @@ export const cardsClient = {
   },
   async get(cardId: string): Promise<CardDetail> {
     const response = await httpClient.get<CardDetail>(`/cards/${cardId}`);
+    return response.data;
+  },
+  async search(boardId: string, query: string, page = 0, size = 20): Promise<Page<CardSummary>> {
+    const response = await httpClient.get<Page<CardSummary>>(`/boards/${boardId}/cards/search`, {
+      params: { query, page, size },
+    });
     return response.data;
   },
   async update(cardId: string, payload: UpdateCardPayload): Promise<CardDetail> {

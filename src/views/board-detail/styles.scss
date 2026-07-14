@@ -1,5 +1,58 @@
 @import "@/assets/styles/mixins";
 
+.invite-user-search {
+  :deep(.v-autocomplete__menu-icon) {
+    display: none;
+  }
+}
+
+.invite-selected-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 4px 12px;
+  border-radius: 8px;
+  border-color: rgb(var(--v-theme-primary)) !important;
+  box-sizing: border-box;
+
+  .invite-selected-card-info {
+    min-width: 0;
+    flex: 1 1 auto;
+    line-height: 1.25;
+
+    .invite-selected-card-name {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .invite-selected-card-email {
+      overflow: hidden;
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 11px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .invite-selected-card-close {
+    margin-right: 1px;
+
+    :deep(.v-icon) {
+      font-size: 20px;
+    }
+  }
+}
+
+:global(.invite-user-menu) {
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+
+:global(.invite-user-menu .v-list-item) {
+  --v-list-prepend-gap: 8px;
+}
+
 .board-bar {
   display: flex;
   align-items: center;

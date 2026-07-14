@@ -146,15 +146,57 @@
       :error="inviteError"
       @submit="handleInvite"
     >
-      <VTextField
-        v-model="inviteEmail"
-        label="Email участника"
-        type="email"
+      <VAutocomplete
+        v-if="!selectedInviteUser"
+        v-model="selectedInviteUserId"
+        v-model:search="userSearch.query.value"
+        :menu="inviteMenuOpen"
+        :items="userSearch.results.value"
+        :loading="userSearch.loading.value"
+        item-title="displayName"
+        item-value="id"
+        label="Участник"
+        placeholder="Введите email или имя"
         variant="outlined"
         density="comfortable"
         hide-details
+        no-filter
+        menu-icon=""
+        prepend-inner-icon="mdi-magnify"
         required
-      />
+        class="invite-user-search"
+        :menu-props="{ contentClass: 'invite-user-menu' }"
+        @update:model-value="handleSelectInviteUser"
+        @update:menu="handleInviteMenuUpdate"
+      >
+        <template #item="{ props: itemProps, item }">
+          <VListItem v-bind="itemProps" :title="userOf(item).displayName">
+            <template #prepend>
+              <UserAvatar :name="userOf(item).displayName" size="28" />
+            </template>
+            <template #subtitle>{{ userOf(item).email }}</template>
+          </VListItem>
+        </template>
+        <template #no-data>
+          <VListItem v-if="userSearch.loading.value" title="Идёт поиск..." />
+          <VListItem v-else title="Пользователи не найдены" />
+        </template>
+      </VAutocomplete>
+      <VCard v-else variant="outlined" class="invite-selected-card">
+        <UserAvatar :name="selectedInviteUser.displayName" size="32" initials-size="12px" />
+        <div class="invite-selected-card-info">
+          <div class="invite-selected-card-name">{{ selectedInviteUser.displayName }}</div>
+          <div class="invite-selected-card-email">{{ selectedInviteUser.email }}</div>
+        </div>
+        <VBtn
+          icon="mdi-close"
+          variant="text"
+          density="compact"
+          size="small"
+          class="invite-selected-card-close"
+          @click="clearSelectedInviteUser"
+        />
+      </VCard>
       <VSelect
         v-model="inviteRole"
         :items="INVITABLE_ROLE_OPTIONS"
@@ -168,10 +210,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { boardsClient } from "@/api";
+import { boardsClient, usersClient } from "@/api";
 import { useAuthStore } from "@/stores/auth";
+import { useBoardContextStore } from "@/stores/boardContext";
+import { useDebouncedSearch } from "@/composables/useDebouncedSearch";
 import ColumnsBoard from "@/components/columns-board/ColumnsBoard.vue";
 import CardDetailDialog from "@/components/card-detail-dialog/CardDetailDialog.vue";
 import UserAvatar from "@/components/user-avatar/UserAvatar.vue";
@@ -180,11 +224,12 @@ import { useAsyncForm } from "@/composables/useAsyncForm";
 import { useConfirmAction } from "@/composables/useConfirmAction";
 import { ROUTE_NAMES } from "@/router/routeNames";
 import { BOARD_ROLE_LABELS, INVITABLE_ROLE_OPTIONS } from "@/constants/boardRoles";
-import type { Board, BoardMember, BoardRole } from "@/types/models";
+import type { Board, BoardMember, BoardRole, User } from "@/types/models";
 
 const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
+const boardContextStore = useBoardContextStore();
 
 const boardId = computed(() => route.params.id as string);
 
@@ -248,15 +293,70 @@ async function handleDeleteBoard(): Promise<void> {
 }
 
 const inviteDialogOpen = ref(false);
-const inviteEmail = ref("");
+const USER_SEARCH_MIN_LENGTH = 2;
+
 const inviteRole = ref<BoardRole>("VIEWER");
+const selectedInviteUserId = ref<string | null>(null);
+const selectedInviteEmail = ref("");
+const selectedInviteUser = ref<User | null>(null);
+const inviteMenuOpen = ref(false);
 const { loading: inviting, error: inviteError, run: runInvite } = useAsyncForm("Не удалось пригласить участника");
 
+const userSearch = useDebouncedSearch<User>(
+  async (query) => {
+    const page = await usersClient.search(query);
+    return page.content;
+  },
+  { minLength: USER_SEARCH_MIN_LENGTH, delay: 300 },
+);
+
+function userOf(item: unknown): User {
+  const wrapped = item as { raw?: User };
+  return wrapped?.raw ?? (item as User);
+}
+
+function handleInviteMenuUpdate(value: boolean): void {
+  inviteMenuOpen.value = value && userSearch.query.value.trim().length >= USER_SEARCH_MIN_LENGTH;
+}
+
+watch(
+  () => userSearch.query.value,
+  (value) => {
+    inviteMenuOpen.value = value.trim().length >= USER_SEARCH_MIN_LENGTH;
+  },
+);
+
+function handleSelectInviteUser(userId: string | null): void {
+  const user = userSearch.results.value.find((candidate) => candidate.id === userId) || null;
+  selectedInviteUser.value = user;
+  selectedInviteEmail.value = user?.email || "";
+  inviteMenuOpen.value = false;
+}
+
+function clearSelectedInviteUser(): void {
+  selectedInviteUserId.value = null;
+  selectedInviteEmail.value = "";
+  selectedInviteUser.value = null;
+  userSearch.reset();
+}
+
+watch(inviteDialogOpen, (open) => {
+  if (!open) {
+    selectedInviteUserId.value = null;
+    selectedInviteEmail.value = "";
+    selectedInviteUser.value = null;
+    inviteMenuOpen.value = false;
+    userSearch.reset();
+  }
+});
+
 async function handleInvite(): Promise<void> {
+  if (!selectedInviteEmail.value) {
+    return;
+  }
   const ok = await runInvite(async () => {
-    await boardsClient.inviteMember(boardId.value, { email: inviteEmail.value, role: inviteRole.value });
+    await boardsClient.inviteMember(boardId.value, { email: selectedInviteEmail.value, role: inviteRole.value });
     inviteDialogOpen.value = false;
-    inviteEmail.value = "";
   });
   if (ok) {
     await loadMembers();
@@ -272,6 +372,7 @@ async function handleRemoveMember(member: BoardMember): Promise<void> {
   await confirmAction(`Удалить ${member.displayName} с доски?`, async () => {
     await boardsClient.removeMember(boardId.value, member.userId);
     await loadMembers();
+    handleCardChanged();
   });
 }
 
@@ -287,6 +388,27 @@ function openCard(cardId: string): void {
 function handleCardChanged(): void {
   cardsRefreshToken.value += 1;
 }
+
+watch(
+  [boardId, canEdit, members],
+  ([id, edit, memberList]) => {
+    boardContextStore.setContext(id, edit, memberList);
+  },
+  { immediate: true },
+);
+
+watch(
+  () => boardContextStore.pendingCardId,
+  (cardId) => {
+    if (cardId) {
+      openCard(boardContextStore.consumePendingCard() as string);
+    }
+  },
+);
+
+onUnmounted(() => {
+  boardContextStore.clearContext();
+});
 
 onMounted(async () => {
   if (!authStore.user) {
