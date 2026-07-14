@@ -9,6 +9,7 @@
           density="compact"
           hide-details
           variant="plain"
+          autocomplete="off"
           @blur="saveTitle"
           @keyup.enter="saveTitle"
         />

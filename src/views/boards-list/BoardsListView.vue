@@ -60,8 +60,23 @@
       :error="createError"
       @submit="handleCreate"
     >
-      <VTextField v-model="name" label="Название" variant="outlined" density="comfortable" hide-details required />
-      <VTextarea v-model="description" label="Описание" variant="outlined" hide-details rows="3" />
+      <VTextField
+        v-model="name"
+        label="Название"
+        variant="outlined"
+        density="comfortable"
+        hide-details
+        required
+        autocomplete="off"
+      />
+      <VTextarea
+        v-model="description"
+        label="Описание"
+        variant="outlined"
+        hide-details
+        rows="3"
+        autocomplete="off"
+      />
     </FormDialog>
 
     <FormDialog
@@ -79,8 +94,16 @@
         density="comfortable"
         hide-details
         required
+        autocomplete="off"
       />
-      <VTextarea v-model="editDescription" label="Описание" variant="outlined" hide-details rows="3" />
+      <VTextarea
+        v-model="editDescription"
+        label="Описание"
+        variant="outlined"
+        hide-details
+        rows="3"
+        autocomplete="off"
+      />
     </FormDialog>
   </VContainer>
 </template>

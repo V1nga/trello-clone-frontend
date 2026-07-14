@@ -26,6 +26,7 @@
             menu-icon=""
             clearable
             prepend-inner-icon="mdi-magnify"
+            autocomplete="off"
             class="card-search-field"
             :menu-props="{ contentClass: 'card-search-menu' }"
             @update:model-value="handleSelectCard"

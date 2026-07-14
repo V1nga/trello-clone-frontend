@@ -143,8 +143,16 @@
         density="comfortable"
         hide-details
         required
+        autocomplete="off"
       />
-      <VTextarea v-model="editDescription" label="Описание" variant="outlined" hide-details rows="3" />
+      <VTextarea
+        v-model="editDescription"
+        label="Описание"
+        variant="outlined"
+        hide-details
+        rows="3"
+        autocomplete="off"
+      />
     </FormDialog>
 
     <FormDialog
@@ -173,6 +181,7 @@
         menu-icon=""
         prepend-inner-icon="mdi-magnify"
         required
+        autocomplete="off"
         class="invite-user-search"
         :menu-props="{ contentClass: 'invite-user-menu' }"
         @update:model-value="handleSelectInviteUser"

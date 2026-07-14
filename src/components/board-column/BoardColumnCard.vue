@@ -7,6 +7,7 @@
         density="compact"
         hide-details
         autofocus
+        autocomplete="off"
         @update:model-value="emit('update:editingNameValue', String($event))"
         @keyup.enter="emit('save-rename')"
         @blur="emit('save-rename')"

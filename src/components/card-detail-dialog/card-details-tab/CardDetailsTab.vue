@@ -6,6 +6,7 @@
     label="Описание"
     :readonly="!canEdit"
     rows="4"
+    autocomplete="off"
     @update:model-value="(value) => emit('update:descriptionDraft', value)"
     @blur="saveDescription"
   />
@@ -17,6 +18,7 @@
     label="Срок выполнения"
     type="datetime-local"
     :readonly="!canEdit"
+    autocomplete="off"
     @update:model-value="(value) => emit('update:dueDateDraft', value)"
     @change="saveDueDate"
   />
@@ -89,7 +91,13 @@
             </VListItem>
           </VList>
           <VCardText>
-            <VTextField v-model="newLabelName" label="Название метки" density="compact" hide-details />
+            <VTextField
+              v-model="newLabelName"
+              label="Название метки"
+              density="compact"
+              hide-details
+              autocomplete="off"
+            />
             <div class="color-row">
               <VBtn
                 v-for="color in labelColors"

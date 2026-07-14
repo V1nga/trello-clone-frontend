@@ -11,7 +11,14 @@
     </div>
   </div>
   <template v-if="canEdit">
-    <VTextarea v-model="newCommentText" class="comment-field" label="Комментарий" rows="2" density="compact" />
+    <VTextarea
+      v-model="newCommentText"
+      class="comment-field"
+      label="Комментарий"
+      rows="2"
+      density="compact"
+      autocomplete="off"
+    />
     <div class="comment-actions">
       <VBtn color="primary" prepend-icon="mdi-send" @click="addComment">Отправить</VBtn>
     </div>

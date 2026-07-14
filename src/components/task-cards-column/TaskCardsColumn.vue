@@ -53,6 +53,7 @@
           density="comfortable"
           autofocus
           hide-details
+          autocomplete="off"
         />
       </FormDialog>
     </template>

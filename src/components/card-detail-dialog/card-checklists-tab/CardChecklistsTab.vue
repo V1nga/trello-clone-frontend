@@ -26,6 +26,7 @@
         variant="plain"
         placeholder="+ Добавить пункт"
         hide-details
+        autocomplete="off"
         @keyup.enter="addItem(checklist)"
       />
     </div>
@@ -50,7 +51,13 @@
     submit-label="Добавить"
     @submit="createChecklist"
   >
-    <VTextField v-model="newChecklistTitle" label="Название чек-листа" autofocus hide-details />
+    <VTextField
+      v-model="newChecklistTitle"
+      label="Название чек-листа"
+      autofocus
+      hide-details
+      autocomplete="off"
+    />
   </FormDialog>
 </template>
 

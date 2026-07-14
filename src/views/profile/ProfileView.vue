@@ -16,9 +16,9 @@
             <div class="profile-main">
               <VCardTitle class="profile-title">Профиль</VCardTitle>
               <VCardText class="profile-content">
-                <VTextField :model-value="authStore.user?.email" label="Email" readonly />
+                <VTextField :model-value="authStore.user?.email" label="Email" readonly autocomplete="off" />
                 <VForm class="profile-form" @submit.prevent="handleSubmit">
-                  <VTextField v-model="displayName" label="Имя" required />
+                  <VTextField v-model="displayName" label="Имя" required autocomplete="off" />
                   <VAlert v-if="successMessage" class="form-alert" type="success" density="compact">
                     {{ successMessage }}
                   </VAlert>
